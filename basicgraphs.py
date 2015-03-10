@@ -144,8 +144,8 @@ class graph():
 		# handle directed graphs.
 		self._simple=simple
 		self._nextlabel=0
-		self.colourmap = {}
-		self._colourmap = {}
+		self.colormap = {}
+		self._colormap = {}
 		for i in range(n):
 			self.addvertex()
 		
@@ -246,23 +246,38 @@ class graph():
 		degreeList.sort(key=None, reverse=False)
 		return degreeList
 	
-	def isEqualInColour(self, other):
-		if self.colourmap is None or other.colourmap is None:
+	def isDoneWithColoring(self):
+		done = True
+		for color in self.colormap:
+			if len(self.colormap.get(color)) > 1:
+				done = False
+				break
+		return done
+	
+	def copy(self):
+		res = graph(len(self.V()))
+		for i in self.E():
+			pass
+		return res
+		
+					
+	def isEqualIncolor(self, other):
+		if self.colormap is None or other.colormap is None:
 			print("Je shizzle is none")
 			return False
-		elif len(self.colourmap) != len(other.colourmap):
+		elif len(self.colormap) != len(other.colormap):
 			print("Ongelijke lengtjes")
 			return False
 		else:
-			selfDict = self.colourmap
-			otherDict = other.colourmap
+			selfDict = self.colormap
+			otherDict = other.colormap
 			for key in selfDict:
-				colourNumList = []
+				colorNumList = []
 				for vertex in otherDict.get(key):
-					colourNumList.append(vertex.colournum)
+					colorNumList.append(vertex.colornum)
 				for value in selfDict.get(key):
-					if value.colournum not in colourNumList:
-						print("Value",value,"niet gevonden in de lijst",colourNumList)
+					if value.colornum not in colorNumList:
+						print("Value",value,"niet gevonden in de lijst",colorNumList)
 						return False
 				#if selfDict.get(key) != otherDict.get(key):
 				#	print("Ongelijke lijst van kleur",key,"(",selfDict.get(key)," ongelijk aan",otherDict.get(key),").")
